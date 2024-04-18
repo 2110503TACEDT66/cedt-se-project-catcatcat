@@ -8,6 +8,7 @@ export default async function addReservation(reservationItem: ReservationItem, t
         body: JSON.stringify({
             reserveStartTime: reservationItem.startTime,
             reserveEndTime: reservationItem.endTime,
+            totalcost: reservationItem.totalcost
         })
     })
 

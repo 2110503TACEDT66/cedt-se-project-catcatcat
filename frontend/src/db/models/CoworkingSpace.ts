@@ -35,7 +35,11 @@ const CoworkingSpaceSchema = new mongoose.Schema({
   closetime:{
       type: String,
       required: [true, 'Please add a closing time']
-  }
+  },
+  rate: {
+    type: String,
+    required: [true, 'Please add a reservation rate']
+}
 },
   );
 

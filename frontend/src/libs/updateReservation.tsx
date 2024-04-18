@@ -7,7 +7,8 @@ export default async function updateReservation(reservationItem: any, token: str
         },
         body: JSON.stringify({
             reserveStartTime: reservationItem.startTime,
-            reserveEndTime: reservationItem.endTime
+            reserveEndTime: reservationItem.endTime,
+            totalcost: reservationItem.totalcost
         })
     })
 
