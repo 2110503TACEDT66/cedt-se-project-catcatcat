@@ -19,6 +19,15 @@ const ReservationSchema = new mongoose.Schema({
         ref: 'coworkingspace',
         required: true
     },
+    totalcost: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['waiting', 'pending', 'success', 'failed'],
+        default: 'waiting'
+    },
     createAt: {
         type: Date,
         default: Date.now
