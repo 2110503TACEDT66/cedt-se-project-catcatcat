@@ -9,6 +9,37 @@ import Link from "next/link"
 
 export default function View({reservation, transaction} : {reservation:Reservation, transaction: Transaction|null}){
     
+    const {data: session} = useSession()
+    const router = useRouter()
+
+    const onClickRefuse = () => {
+        if (session) {
+            if (refuseScreen.current) refuseScreen.current.classList.toggle('hidden')
+            if (waitingRefuse.current) waitingRefuse.current.classList.toggle('hidden')
+            updateReservationStatus({id: reservation._id, status: 'failed'}, session.user.token)
+            .then(() => {
+                router.push('/myreservation')
+                router.refresh()
+            })
+        }
+    }
+    
+    const refuseScreen = useRef<HTMLDivElement>(null)
+    const confirmScreen = useRef<HTMLDivElement>(null)
+    const waitingRefuse = useRef<HTMLDivElement>(null)
+    const waitingConfirm = useRef<HTMLDivElement>(null)
+    
+    const onClickConfirm = () => {
+        if (session) {
+            if (confirmScreen.current) confirmScreen.current.classList.toggle('hidden')
+            if (waitingConfirm.current) waitingConfirm.current.classList.toggle('hidden')
+            updateReservationStatus({id: reservation._id, status: 'success'}, session.user.token)
+            .then(() => {
+                router.push('/myreservation')
+                router.refresh()
+            })
+        }
+    }
 
     return (
         <div className="text-center m-10">
@@ -29,8 +60,9 @@ export default function View({reservation, transaction} : {reservation:Reservati
                         <div className="text-base ml-5">End time: {dayjs(reservation.reserveEndTime).subtract(7, 'hour').format('DD/MM/YYYY HH:mm')}</div>
                         <div className="text-base ml-5 mb-3">Cost: {reservation.totalcost} Baht</div>
                     </div>
-                    <div className="space-y-4">
-                        <div className="text-xl font-bold text-left ml-8 mt-5">Transaction slip: </div>
+                    <div className="space-y-2">
+                        <div className="text-xl font-bold text-left ml-8 mt-5">Bank: {transaction?.bank}</div>
+                        <div className="text-xl font-bold text-left ml-8">Transaction slip: </div>
                         <div className="font-medium flex justify-center">
                             { transaction? <img src={transaction.slip} className="h-[20vw]"/> : 'No transaction slip yet' }
                         </div>
@@ -46,8 +78,16 @@ export default function View({reservation, transaction} : {reservation:Reservati
                 {
                     session?.user.role === 'admin'?
                     <div className="space-x-12">
-                        <button className="text-lg text-white bg-rose-red py-2 rounded-lg w-[180px] hover:bg-rose-700" onClick={(e) => {if (refuseScreen.current) refuseScreen.current.classList.toggle('hidden')}}>Refuse</button>
-                        <button className="text-lg text-white bg-green-500 py-2 rounded-lg w-[180px] hover:bg-green-600" onClick={(e) => {if (confirmScreen.current) confirmScreen.current.classList.toggle('hidden')}}>Confirm</button>
+                        {
+                            reservation.status !== 'failed'? 
+                            <button className="text-lg text-white bg-rose-red py-2 rounded-lg w-[180px] hover:bg-rose-700" onClick={(e) => {if (refuseScreen.current) refuseScreen.current.classList.toggle('hidden')}}>Refuse</button>
+                            : null
+                        }
+                        {
+                            reservation.status !== 'success'? 
+                            <button className="text-lg text-white bg-green-500 py-2 rounded-lg w-[180px] hover:bg-green-600" onClick={(e) => {if (confirmScreen.current) confirmScreen.current.classList.toggle('hidden')}}>Confirm</button>
+                            : null
+                        }
                     </div>
                     : null
                 }
