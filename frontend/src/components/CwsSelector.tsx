@@ -3,7 +3,7 @@
 import { Select, MenuItem } from "@mui/material";
 import LocationDateReserve from "@/components/LocationDateReserve"
 import { Dayjs } from "dayjs"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import addReservation from "@/libs/addReservation"
 import { useSession } from "next-auth/react";
@@ -18,7 +18,23 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
     const [cwSpace, setCwSpace] = useState<string|null>(id)
     const [startTime, setStartTime] = useState<Dayjs|null>(null)
     const [endTime, setEndTime] = useState<Dayjs|null>(null)
+    const [totalcost, setTotalCost] = useState<string|null>(null)
     const [reserveStatus, setReserveStatus] = useState<string|null>(null)
+
+    useEffect(() => {
+        if (cwSpace && endTime && startTime) {
+            const coworkingspace = cws.data.find(item => item._id === cwSpace)
+            const totalMinutes = endTime.diff(startTime, 'minute')
+            if (totalMinutes <= 0) {
+                setTotalCost(null)
+                return
+            }
+            const roundedHours = Math.ceil(totalMinutes / 60)
+            if (coworkingspace) {
+                setTotalCost((roundedHours * parseInt(coworkingspace.rate, 10)).toString())
+            }
+        }
+    }, [cwSpace, startTime, endTime])
 
     const {data: session} = useSession()
 
@@ -26,23 +42,22 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
         if (!session) return
 
         if (cwSpace && startTime && endTime) {
+            setReserveStatus('Reserving...')
             const reservationItem: ReservationItem = {
                 userName: session.user.name,
                 cwsID: cwSpace,
                 startTime: startTime.toISOString(),
-                endTime: endTime.toISOString()
+                endTime: endTime.toISOString(),
+                totalcost: totalcost? totalcost : '0'
             }
-
             addReservation(reservationItem, session.user.token)
-                .then(() => {
-                    setReserveStatus('Reserved successfully')
-                    router.push('/myreservation')
-                    router.refresh()
-                })
-                .catch(err => {
-                    setReserveStatus(err.message)
-                })
-
+            .then((reservation) => {
+                setReserveStatus('Waiting for payment')
+                router.push(`/paymentdetail/${reservation.data._id}`);
+            })
+            .catch(err => {
+                setReserveStatus(err.message)
+            })
         } else {
             setReserveStatus('Please enter reserve informations')
         }
@@ -90,6 +105,22 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
                         </th>
                         <th>
                             <LocationDateReserve onDateChange={(value: Dayjs) => { setEndTime(value.add(7, 'hour')) }} />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div className="text-sm font-semibold sm:text-base sm:font-bold">
+                                Cost
+                            </div>
+                        </th>
+                        <th>
+                            <div id="Cost" className="bg-white w-[100%] rounded-md border border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent box-border w-full p-4">
+                                <div>
+                                    {
+                                        totalcost? <div>{totalcost} Baht</div> : <div>-</div>
+                                    }
+                                </div>
+                            </div>
                         </th>
                     </tr>
                 </tbody>
