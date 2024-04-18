@@ -8,6 +8,7 @@ const {xss} = require('express-xss-sanitizer');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 //const swaggerJsDoc = require('swagger-jsdoc');
 //const swaggerUi = require('swagger-ui-express');
@@ -16,6 +17,7 @@ const coworkingspaces = require('./routes/coworkingspaces');
 const auth = require('./routes/auth');
 const reservations = require('./routes/reservations');
 const users = require('./routes/users');
+const transactions = require('./routes/transactions');
 
 // Load env vars
 dotenv.config({path: './config/config.env'});
@@ -24,8 +26,15 @@ connectDB();
 
 const app = express();
 
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+  }));
+app.use(bodyParser.json({limit: '50mb', type: 'application/json'}));
+
 //Body parser
-app.use(express.json());
+// app.use(express.json());
 
 //sanitize data
 app.use(mongoSanitize());
@@ -53,6 +62,7 @@ app.use('/api/coworkingspaces', coworkingspaces);
 app.use('/api/auth', auth);
 app.use('/api/reservations', reservations);
 app.use('/api/users', users);
+app.use('/api/transactions', transactions);
 
 //Cookie parser
 app.use(cookieParser());
