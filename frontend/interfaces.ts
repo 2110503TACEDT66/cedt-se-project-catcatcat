@@ -61,7 +61,8 @@ interface User {
     email: string,
     tel: string,
     password: string,
-    role: string
+    role: string,
+    expire: string
 }
 
 interface UserSession {
@@ -72,4 +73,14 @@ interface UserSession {
     role: string,
     createAt: string,
     token: string
+}
+
+interface PremiumTransaction {
+    _id: string,
+    user: string,
+    membership: string,
+    cost: string,
+    bank: string,
+    studentcard:string,
+    slip: string
 }
