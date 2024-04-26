@@ -27,6 +27,11 @@ export default function TopMenu() {
                 <div className={styles.namecontainer}>Hello, {session.user?.name}</div> : null
             }
             <TopMenuItem title='My Reservations' pageRef='/myreservation'/>
+            {
+                    (session?.user.role === "admin") ?
+                    <TopMenuItem title='Premium Requests' pageRef='/premiumrequests'/>
+                    : null
+            }
             <div className='flex md:hidden absolute right-0 h-full mx-3 mt-1' onClick={handleMenuToggle}>
                 <svg className="w-10 h-10 text-sky-500 dark:text-sky-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeWidth="1" d="M5 7h14M5 12h14M5 17h14"/>
