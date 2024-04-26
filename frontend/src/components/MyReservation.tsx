@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import dayjs from "dayjs"
 import { useState, useRef } from "react"
+import Image from "next/image"
 
 export default function MyReservation({ reservations, user }: { reservations: Reservations, user: UserSession }) {
 
@@ -47,7 +48,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
 
     return (
         <div>
-            <div className=" flex justify-end px-5 mx-5 py-2 my-5 ">
+            <div className="flex justify-end px-5 mx-5 py-2 my-5">
                 <select
                     className={`px-3 py-1 border rounded ${selectedStatus === 'pending' ? 'border-[#E39D48]' : selectedStatus === 'waiting' ? 'border-gray-500' : selectedStatus === 'success' ? 'border-teal-500' : selectedStatus === 'failed' ? 'border-red-400' : 'border-sky-900'}`}
                     value={selectedStatus}
@@ -69,19 +70,51 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                             return item.status === selectedStatus;
                         })
                         .map((item: Reservation) => (
-                            <div className="bg-white border rounded border-sky-900 shadow-lg px-5 mx-5 py-2 my-5 w-[80%]" key={item._id}>
+                            <div className="bg-white border rounded border-sky-900 shadow-lg px-5 mx-[15%] py-2 my-5 w-[70%]" key={item._id}>
                                 <div className="float-right my-2 flex flex-col justify-between text-center sm:flex-row">
                                     {
-                                        item.status === 'waiting' ? <div className="text-xl text-gray-500 font-bold pb-2 py-2">Waiting for payment</div> : null
+                                        item.status === 'waiting' ? 
+                                        <div className="flex flex-row ml-2">
+                                            <div className="w-3 h-3 rounded-full bg-gray-500 mr-1 mt-1"></div>
+                                            <div className="text-md text-gray-500 font-bold">Waiting for payment</div> 
+                                            <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
+                                                <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
+                                            </Link>
+                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                        </div>: null
                                     }
                                     {
-                                        item.status === 'pending' ? <div className="text-xl text-[#E39D48] font-bold pb-2 py-2">Pending Approval</div> : null
+                                        item.status === 'pending' ? 
+                                        <div className="flex flex-row">
+                                            <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1 mt-1"></div>
+                                            <div className="text-md text-gray-500 font-bold">Pending Approval</div> 
+                                            <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
+                                                <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
+                                            </Link>
+                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                        </div>: null
                                     }
                                     {
-                                        item.status === 'success' ? <div className="text-xl text-teal-500 font-bold pb-2 py-2">Success</div> : null
+                                        item.status === 'success' ? 
+                                        <div className="flex flex-row">
+                                            <div className="w-3 h-3 rounded-full bg-teal-500 mr-1 mt-1"></div>
+                                            <div className="text-md text-gray-500 font-bold">Success</div> 
+                                            <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
+                                                <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
+                                            </Link>
+                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                        </div>: null
                                     }
                                     {
-                                        item.status === 'failed' ? <div className="text-xl text-red-400 font-bold pb-2 py-2">Failed</div> : null
+                                        item.status === 'failed' ? 
+                                        <div className="flex flex-row">
+                                            <div className="w-3 h-3 rounded-full bg-red-400 mr-1 mt-1"></div>
+                                            <div className="text-md text-gray-500 font-bold">Failed</div> 
+                                            <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
+                                                <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
+                                            </Link>
+                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                        </div>: null
                                     }
                                 </div>
                                 <div className="text-xl text-black font-bold pb-2 py-2">{item.coworkingspace.name}</div>
@@ -93,12 +126,8 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                 <div className="text-sm text-gray-700">Cost: {item.totalcost} Baht</div>
                                 <div className="my-2 flex flex-col justify-between text-center sm:flex-row">
                                     <div className="flex flex-col justify-start text-center sm:flex-row space-x-0 space-y-1 sm:space-x-4 sm:space-y-0">
-                                        <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}
-                                            className="text-sm text-white bg-cyan-450 py-2 rounded-lg w-[180px] hover:bg-cyan-700">Update Reservation</Link>
-                                        <button className="text-sm text-white bg-rose-red py-2 rounded-lg w-[180px] hover:bg-rose-700"
-                                            onClick={() => removeReservationButton(item)}>Remove Reservation</button>
                                         <Link href={`/myreservation/view/${item._id}`}>
-                                            <button className="text-sm text-white bg-[#2DD397] py-2 rounded-lg w-[180px] hover:bg-[#0E9C69]">View</button>
+                                            <button className="text-sm text-white bg-cyan-450 py-2 rounded-lg w-[180px] hover:bg-cyan-700">View</button>
                                         </Link>
                                     </div>
                                 </div>
