@@ -75,6 +75,11 @@ interface UserSession {
     token: string
 }
 
+interface PremiumTransactions {
+    count: number,
+    data: PremiumTransaction[]
+}
+
 interface PremiumTransaction {
     _id: string,
     user: string,
@@ -82,5 +87,6 @@ interface PremiumTransaction {
     cost: string,
     bank: string,
     studentcard:string,
+    status: string,
     slip: string
 }
