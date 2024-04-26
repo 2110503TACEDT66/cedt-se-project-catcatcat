@@ -1,4 +1,4 @@
-export default async function addPremiumTransaction(premiumtransaction: PremiumTransaction, token: string) {
+export default async function addPremiumTransaction(premiumtransaction: PremiumTransactionItem, token: string) {
     const response = await fetch(`https://coworking-backend-beta.vercel.app/api/premiumtransactions/`, {
         method: 'POST',
         headers: {
@@ -6,7 +6,6 @@ export default async function addPremiumTransaction(premiumtransaction: PremiumT
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            user: premiumtransaction.user,
             membership: premiumtransaction.membership,
             cost: premiumtransaction.cost,
             bank: premiumtransaction.bank,

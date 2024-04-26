@@ -90,3 +90,11 @@ interface PremiumTransaction {
     status: string,
     slip: string
 }
+
+interface PremiumTransactionItem {
+    membership: string,
+    cost: string,
+    bank: string,
+    studentcard:string,
+    slip: string
+}

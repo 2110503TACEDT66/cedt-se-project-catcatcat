@@ -56,13 +56,12 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
         <div>
             <div className="flex justify-end px-5 mx-5 py-2 my-5">
                 <select
-                    className={`px-3 py-1 border rounded ${selectedStatus === 'pending' ? 'border-[#E39D48]' : selectedStatus === 'waiting' ? 'border-gray-500' : selectedStatus === 'success' ? 'border-teal-500' : selectedStatus === 'failed' ? 'border-red-400' : 'border-sky-900'}`}
+                    className={`px-3 py-1 border rounded ${selectedStatus === 'pending' ? 'border-[#E39D48]' : selectedStatus === 'success' ? 'border-teal-500' : selectedStatus === 'failed' ? 'border-red-400' : 'border-sky-900'}`}
                     value={selectedStatus}
                     onChange={(e) => handleChangeStatus(e.target.value)}
                 >
                     <option value="all">All</option>
                     <option value="pending">Pending</option>
-                    <option value="waiting">Waiting</option>
                     <option value="success">Success</option>
                     <option value="failed">Failed</option>
                 </select>
@@ -79,19 +78,11 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
                             <div className="bg-white border rounded border-sky-900 shadow-lg px-5 mx-[15%] py-2 my-5 w-[70%]" key={item._id}>
                                 <div className="float-right my-2 flex flex-col justify-between text-center sm:flex-row">
                                     {
-                                        item.status === 'waiting' ? 
-                                        <div className="flex flex-row ml-2">
-                                            <div className="w-3 h-3 rounded-full bg-gray-500 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Waiting for payment</div>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
-                                        </div>: null
-                                    }
-                                    {
                                         item.status === 'pending' ? 
                                         <div className="flex flex-row">
                                             <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1 mt-1"></div>
                                             <div className="text-md text-gray-500 font-bold">Pending Approval</div> 
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                     {
@@ -99,7 +90,7 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
                                         <div className="flex flex-row">
                                             <div className="w-3 h-3 rounded-full bg-teal-500 mr-1 mt-1"></div>
                                             <div className="text-md text-gray-500 font-bold">Success</div>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                     {
@@ -107,7 +98,7 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
                                         <div className="flex flex-row">
                                             <div className="w-3 h-3 rounded-full bg-red-400 mr-1 mt-1"></div>
                                             <div className="text-md text-gray-500 font-bold">Failed</div>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                 </div>

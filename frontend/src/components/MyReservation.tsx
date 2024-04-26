@@ -75,45 +75,53 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                     {
                                         item.status === 'waiting' ? 
                                         <div className="flex flex-row ml-2">
-                                            <div className="w-3 h-3 rounded-full bg-gray-500 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Waiting for payment</div> 
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-gray-500 mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Waiting for payment</div> 
+                                            </div>
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
                                         item.status === 'pending' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Pending Approval</div> 
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Pending Approval</div> 
+                                            </div>
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
                                         item.status === 'success' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-teal-500 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Success</div> 
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-teal-500 mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Success</div> 
+                                            </div>
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
                                         item.status === 'failed' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-red-400 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Failed</div> 
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-red-400 mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Failed</div> 
+                                            </div>
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                 </div>

@@ -3,14 +3,14 @@
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-export default function PremiumPayment() { 
+export default function PremiumPayment({plan} : {plan: string}) { 
     
     const router = useRouter()
     
     return (
         <div>
-            <div className="bg-gradient-to-r from-gray-900 via-amber-500 to-gray-100 text-transparent bg-clip-text text-3xl font-bold text-center p-2 m-2 mt-6">Premiun Payment Detail</div>
-            <div className="text-xl text-gray-800 font-bold text-center">Total cost : 9999</div>
+            <div className="bg-gradient-to-r from-gray-900 via-amber-500 to-gray-100 text-transparent bg-clip-text text-3xl font-bold text-center p-2 m-2 mt-6">Premium Payment Detail</div>
+            <div className="text-xl text-gray-800 font-bold text-center">Total cost : { plan==='student-month'? '129' : plan==='individual-month'? '199' : '1990'} Baht</div>
             <div className="flex flex-col items-center">
                 <div className="block bg-white border border-2 border-[#DFB36F] shadow-xl mx-5 my-8 w-[50vw] py-8 pl-8 rounded-lg">
                     <div className="text-xl text-black font-bold mb-4">Choose Bank</div>
@@ -42,7 +42,10 @@ export default function PremiumPayment() {
                 </div>
             </div>
             <div className="flex justify-center">
-                <button className="text-white bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-amber-300 dark:focus:ring-red-400 rounded-lg text-lg bg-cyan-450 py-2 rounded-lg w-[200px] hover:bg-cyan-700 mb-24" onClick={() => router.push(`/premium/registration`)} >Confirm Payment</button>
+                <button className="text-white bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-amber-300 dark:focus:ring-red-400 rounded-lg text-lg bg-cyan-450 py-2 rounded-lg w-[200px] hover:bg-cyan-700 mb-24"
+                onClick={() => router.push(`/premium/registration/${plan}`)}>
+                    Confirm Payment
+                </button>
             </div>
         </div>
     )

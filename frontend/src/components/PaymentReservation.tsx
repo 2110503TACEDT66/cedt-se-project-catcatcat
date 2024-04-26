@@ -6,7 +6,6 @@ import { useState, useRef } from "react"
 import { useSession } from "next-auth/react"
 import addTransaction from "@/libs/addTransaction"
 import updateReservationStatus from "@/libs/updateReservationStatus"
-import { stat } from "fs"
 
 export default function PaymentReservation({ reservation }: { reservation: Reservation }) {
 
@@ -16,7 +15,6 @@ export default function PaymentReservation({ reservation }: { reservation: Reser
 
     const [bank, setBank] = useState<string>("null")
     const [status, setStatus] = useState<string|null>(null)
-
 
     const confirmPayment = () => {
         if (session && image && bank !== "null") {
