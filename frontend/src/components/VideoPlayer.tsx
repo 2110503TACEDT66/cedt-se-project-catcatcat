@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useEffect, useState} from "react"
+import PremiumMenu from './PremiumMenu'
+import styles from './banner.module.css'
 
 export default function VideoPlayer({vdoSrc, isPlaying}: {vdoSrc:string, isPlaying:boolean}) {
 
@@ -39,6 +41,9 @@ export default function VideoPlayer({vdoSrc, isPlaying}: {vdoSrc:string, isPlayi
             }
 
             <video src={vdoSrc} ref={vdoRef} autoPlay loop muted={vdoMuted} className="w-[100%]"/>
+            <div className={styles.menu}>
+                <PremiumMenu/>
+            </div>
         </div>
     )
 }
