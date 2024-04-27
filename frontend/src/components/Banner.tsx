@@ -6,6 +6,9 @@ export default function Banner() {
   return (
     <div className={styles.banner}>
     <div className={styles.section}>
+      <PremiumMenu/>
+    </div>
+    <div className={styles.section}>
       <section className={styles.eachsection}>
           <Image className={styles.img} alt='img' src="/img/cws1.jpg" width={2400} height={1600}/>
       </section>
