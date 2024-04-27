@@ -10,7 +10,7 @@ export default async function MyReservationPage() {
     if (!session) return null
 
     const reservations = await getReservations(session.user.token)
-
+    
     return(
         <main>
             <MyReservation reservations={reservations} user={session.user}/>

@@ -1,5 +1,5 @@
 export default async function userLogIn(userEmail:string, userPassword:string) {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/auth/login`, {
+    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

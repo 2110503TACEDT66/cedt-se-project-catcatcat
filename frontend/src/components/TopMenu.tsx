@@ -59,6 +59,7 @@ export default function TopMenu() {
                 </div> : null
             }
             <div className='hidden md:flex flex-row absolute right-0 h-full'>
+
                 <TopMenuItem title='Co-working Spaces' pageRef='/coworkingspace'/>
                 <TopMenuItem title='Make Reservation' pageRef='/reservation'/>
                 {
@@ -76,6 +77,8 @@ export default function TopMenu() {
                     </div>
                 }
             </div>
+
+            
         </div>
     );
 }

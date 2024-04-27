@@ -1,6 +1,8 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useEffect } from 'react';
+
 
 export default function SpecialPrivileges() {
 
@@ -20,6 +22,7 @@ export default function SpecialPrivileges() {
                     </div>
                 </div>
             </div>
+            <div id="membership" className="text-xl text-white font-sans pb-2">|</div>
 
             <div className="text-center text-4xl text-yellow-600 font-bold pt-10 pb-5">Pick a membership that fits you</div>
 
@@ -69,10 +72,6 @@ export default function SpecialPrivileges() {
             <div className="pt-10 pb-10"></div>
 
             <img src="/img/premium_2.png" alt="cute cat" className="inset-x-0 bottom-0" />
-
-
-
-
 
         </div>
     )
