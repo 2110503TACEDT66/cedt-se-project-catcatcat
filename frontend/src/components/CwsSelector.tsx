@@ -19,6 +19,7 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
     const [startTime, setStartTime] = useState<Dayjs|null>(null)
     const [endTime, setEndTime] = useState<Dayjs|null>(null)
     const [totalcost, setTotalCost] = useState<string|null>(null)
+    const [discountedCost, setDiscountedCost] = useState<string|null>(null)
     const [reserveStatus, setReserveStatus] = useState<string|null>(null)
 
     useEffect(() => {
@@ -27,11 +28,13 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
             const totalMinutes = endTime.diff(startTime, 'minute')
             if (totalMinutes <= 0) {
                 setTotalCost(null)
+                setDiscountedCost(null)
                 return
             }
             const roundedHours = Math.ceil(totalMinutes / 60)
             if (coworkingspace) {
                 setTotalCost((roundedHours * parseInt(coworkingspace.rate, 10)).toString())
+                setDiscountedCost((roundedHours * parseInt(coworkingspace.rate, 10) * 9 / 10).toString())
             }
         }
     }, [cwSpace, startTime, endTime])
@@ -48,7 +51,7 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
                 cwsID: cwSpace,
                 startTime: startTime.toISOString(),
                 endTime: endTime.toISOString(),
-                totalcost: totalcost? totalcost : '0'
+                totalcost: totalcost? session.user.role == "premium" && discountedCost ? discountedCost : totalcost : '0'
             }
             addReservation(reservationItem, session.user.token)
             .then((reservation) => {
@@ -117,7 +120,8 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
                             <div id="Cost" className="bg-white w-[100%] rounded-md border border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent box-border w-full p-4">
                                 <div>
                                     {
-                                        totalcost? <div>{totalcost} Baht</div> : <div>-</div>
+                                        totalcost? session?.user.role == "premium" ? <div>{discountedCost} Baht (from {totalcost})</div>
+                                        : <div>{totalcost} Baht</div> : <div>-</div>
                                     }
                                 </div>
                             </div>
