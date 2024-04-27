@@ -9,7 +9,8 @@ declare module "next-auth" {
             tel: string,
             role: string,
             createAt: string,
-            token: string
+            token: string,
+            expire: string
         }
     }
 }
