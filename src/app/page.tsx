@@ -12,7 +12,7 @@ export default async function Home() {
       <PopUp session={session} />
       <VideoBanner />
       <div className="overflow-auto">
-        <Banner />
+        <Banner/>
       </div>
     </main>
   );
