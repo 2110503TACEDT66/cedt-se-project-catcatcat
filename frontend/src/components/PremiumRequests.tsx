@@ -131,7 +131,7 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={waitingRemove}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4 text-center">
-                    <div className="text-2xl font-bold mb-4">Removing the request...</div>
+                    <div className="text-2xl font-bold mb-4">Removing the reservation...</div>
                     <div>Please wait a moment</div>
                 </div>
             </div>

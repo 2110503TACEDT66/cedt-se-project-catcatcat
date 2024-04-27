@@ -2,8 +2,10 @@
 
 import { Session } from "next-auth";
 import { useState } from "react";
+import { useRouter } from "next/navigation"
 
 export default function PopUp({session} : {session:Session|null}){
+    
     if (!session || session.user.role != "premium" || !session.user.expire) return null;
 
     const currentDate = new Date();
@@ -17,6 +19,8 @@ export default function PopUp({session} : {session:Session|null}){
 
     const [ openPopUp, setOpenPopUp ] = useState(true);
 
+    const router = useRouter()
+
     return (   
         openPopUp ?
         <div>
@@ -26,7 +30,7 @@ export default function PopUp({session} : {session:Session|null}){
                     Your Subscription is about to end in {daysRemaining} days {hoursRemaining} hours. 
                 </div>
                 <div className="flex justify-center mb-2">
-                    <button className="w-52 mx-7 px-4 py-2 bg-yellow-500 text-lg font-medium rounded-xl hover:bg-yellow-600 focus:outline-none">
+                    <button className="w-52 mx-7 px-4 py-2 bg-yellow-500 text-lg font-medium rounded-xl hover:bg-yellow-600 focus:outline-none" onClick={() => { router.push('/premium')}}>
                         Renew
                     </button>
                     <button className="w-52 mx-7 px-4 py-2 bg-gray-300 text-lg font-medium rounded-xl hover:bg-gray-400 focus:outline-none"
