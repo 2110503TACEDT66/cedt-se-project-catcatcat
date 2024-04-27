@@ -82,6 +82,8 @@ module.exports = router;
  *                type: string
  *            required: true
  *            description: The reservation id
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: The transaction description by reservation id
@@ -105,6 +107,8 @@ module.exports = router;
  *              application/json:
  *                  schema:
  *                      $ref: '#/components/schemas/Transaction'
+ *      security:
+ *         - bearerAuth: []
  *      responses:
  *          201:
  *              description: Transaction was successfully created

@@ -6,8 +6,10 @@ const PremiumTransaction = require('../models/PremiumTransaction');
 exports.getPremiumTransactions = async (req, res, next) => {
     let query;
 
-    if (req.user.role == 'admin') {
-        query = PremiumTransaction.find();
+    if (req.user.role !== 'admin') {
+        query = PremiumTransaction.find({user: req.user.id}, '_id user membership cost status');
+    } else {
+        query = PremiumTransaction.find({}, '_id user membership cost status');
     }
 
     try {
@@ -24,15 +26,15 @@ exports.getPremiumTransactions = async (req, res, next) => {
     }
 };
 
-//@desc     Get single transaction
-//@route    GET /api/transactions/:id
+//@desc     Get single premium transaction
+//@route    GET /api/premiumtransactions/:id
 //@access   Private
 exports.getPremiumTransaction = async (req, res, next) => {
     try {
-        const premiumTansaction = await PremiumTransaction.findOne({user: req.params.id})
+        const premiumTansaction = await PremiumTransaction.findById(req.params.id)
 
         if (!premiumTansaction) {
-            return res.status(404).json({success: false, message: `No Premium Transaction with the reservation id of ${req.params.id}`});
+            return res.status(404).json({success: false, message: `No Premium Transaction with the user id of ${req.params.id}`});
         }
 
         res.status(200).json({success: true, data: premiumTansaction});
@@ -42,8 +44,8 @@ exports.getPremiumTransaction = async (req, res, next) => {
     }
 };
 
-//@desc     Add transaction
-//@route    POST /api/transactions/
+//@desc     Add premium transaction
+//@route    POST /api/premiumtransactions/
 //@access   Private
 exports.addPremiumTransaction = async (req, res, next) => {
     try {
@@ -56,6 +58,30 @@ exports.addPremiumTransaction = async (req, res, next) => {
     } catch (error) {
         console.log(error.stack);
         return res.status(500).json({success: false, message: 'Cannot create Premium Transaction'});
+    }
+};
+
+//@desc     Update a premium transaction
+//@route    PUT /api/premiumtransactions/:id
+//@access   Private
+exports.updatePremiumTransaction = async (req,res,next) => {
+    try {
+        let premiumTransaction = await PremiumTransaction.findById(req.params.id);
+
+        if (!premiumTransaction) {
+            return res.status(404).json({success: false, message: `No premium transaction intment with the id of ${req.params.id}`});
+        }
+
+        premiumTransaction = await PremiumTransaction.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+
+        res.status(200).json({success:true, data: premiumTransaction});
+    }
+    catch (error) {
+        console.log(error.stack);
+        return res.status(500).json({success: false, message: 'Cannot update Premium Transaction'});
     }
 };
 
