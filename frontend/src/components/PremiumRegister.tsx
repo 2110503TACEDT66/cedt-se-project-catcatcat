@@ -4,6 +4,7 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import addPremiumTransaction from "@/libs/addPremiumTransaction"
+import compressImage from 'browser-image-compression'
 
 export default function PaymentReservation({plan} : {plan : string}) {
 
@@ -20,28 +21,34 @@ export default function PaymentReservation({plan} : {plan : string}) {
     const waitingPopup = useRef<HTMLDivElement>(null)
 
     function transactionImage(e: any) {
-        var reader = new FileReader()
         if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0])
-            reader.onload = () => {
-                setImgTransaction(reader.result)
-            }
-            reader.onerror = error => {
-                console.log("Error: ", error)
-            }
+            compressImage(e.target.files[0], {
+                maxSizeMB: 0.05,
+                maxWidthOrHeight: 1000
+            })
+            .then((data) => {
+                var reader = new FileReader()
+                reader.readAsDataURL(data)
+                reader.onload = () => {
+                    setImgTransaction(reader.result);
+                };
+            })
         }
     }
 
     function studentImage(e: any) {
-        var reader = new FileReader()
         if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0])
-            reader.onload = () => {
-                setImgStudent(reader.result)
-            }
-            reader.onerror = error => {
-                console.log("Error: ", error)
-            }
+            compressImage(e.target.files[0], {
+                maxSizeMB: 0.05,
+                maxWidthOrHeight: 1000
+            })
+            .then((data) => {
+                var reader = new FileReader()
+                reader.readAsDataURL(data)
+                reader.onload = () => {
+                    setImgStudent(reader.result);
+                };
+            })
         }
     }
 
@@ -61,12 +68,8 @@ export default function PaymentReservation({plan} : {plan : string}) {
 
             addPremiumTransaction(transaction, session.user.token)
                 .then(() => {
-                    // updateReservationStatus({ id: reservation._id, status: 'pending' }, session.user.token)
-                    //     .then(() => {
-                    //         router.push(`/myreservation`)
-                    //         router.refresh()
-                    //     })
-                    router.push(`/`)
+                    router.push(`/mypremium`)
+                    router.refresh()
                 })
                 .catch(err => {
                     console.log(err)
@@ -87,12 +90,8 @@ export default function PaymentReservation({plan} : {plan : string}) {
 
             addPremiumTransaction(transaction, session.user.token)
                 .then(() => {
-                    // updateReservationStatus({ id: reservation._id, status: 'pending' }, session.user.token)
-                    //     .then(() => {
-                    //         router.push(`/myreservation`)
-                    //         router.refresh()
-                    //     })
-                    router.push(`/`)
+                    router.push(`/mypremium`)
+                    router.refresh()
                 })
                 .catch(err => {
                     console.log(err)

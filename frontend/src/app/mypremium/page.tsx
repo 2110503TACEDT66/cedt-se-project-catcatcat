@@ -1,7 +1,7 @@
-import PremiumRequests from "@/components/PremiumRequests"
 import getPremiumTransactions from "@/libs/getPremiumTransactions";
 import { getServerSession } from "next-auth"
 import authOptions from '@/libs/auth/authOptions';
+import MyPremium from "@/components/MyPremium";
 
 export default async function MyPremiumPage() {
 
@@ -13,7 +13,7 @@ export default async function MyPremiumPage() {
     
     return(
         <main>
-            <PremiumRequests premiumTransactions={premiumTransactions} user={session.user}/>
+            <MyPremium premiumTransactions={premiumTransactions} user={session.user}/>
         </main>
     )
 }

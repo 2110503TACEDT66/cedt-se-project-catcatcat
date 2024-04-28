@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useState, useRef } from "react"
 import Image from "next/image"
 
-export default function PremiumRequests({ premiumTransactions, user }: { premiumTransactions: PremiumTransactions, user: UserSession }) {
+export default function MyPremium({ premiumTransactions, user }: { premiumTransactions: PremiumTransactions, user: UserSession }) {
 
     const router = useRouter()
     router.refresh()
@@ -107,7 +107,7 @@ export default function PremiumRequests({ premiumTransactions, user }: { premium
                                 <div className="text-sm text-gray-700">Cost: {item.cost} Baht</div>
                                 <div className="my-2 flex flex-col justify-between text-center sm:flex-row">
                                     <div className="flex flex-col justify-start text-center sm:flex-row space-x-0 space-y-1 sm:space-x-4 sm:space-y-0">
-                                        <Link href={`/premiumrequests/${item._id}`}>
+                                        <Link href={`/mypremium/view/${item._id}`}>
                                             <button className="text-sm text-white bg-cyan-450 py-2 rounded-lg w-[180px] hover:bg-cyan-700">View</button>
                                         </Link>
                                     </div>

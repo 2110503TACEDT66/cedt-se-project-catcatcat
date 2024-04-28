@@ -6,6 +6,7 @@ import { useState, useRef } from "react"
 import { useSession } from "next-auth/react"
 import addTransaction from "@/libs/addTransaction"
 import updateReservationStatus from "@/libs/updateReservationStatus"
+import compressImage from 'browser-image-compression'
 
 export default function PaymentReservation({ reservation }: { reservation: Reservation }) {
 
@@ -52,15 +53,18 @@ export default function PaymentReservation({ reservation }: { reservation: Reser
     const waitingPopup = useRef<HTMLDivElement>(null)
 
     function convertToBase64(e: any) {
-        var reader = new FileReader()
         if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0])
-            reader.onload = () => {
-                setImage(reader.result)
-            }
-            reader.onerror = error => {
-                console.log("Error: ", error)
-            }
+            compressImage(e.target.files[0], {
+                maxSizeMB: 0.05,
+                maxWidthOrHeight: 1000
+            })
+            .then((data) => {
+                var reader = new FileReader()
+                reader.readAsDataURL(data)
+                reader.onload = () => {
+                    setImage(reader.result);
+                };
+            })
         }
     }
 
