@@ -1,17 +1,12 @@
 'use client'
 
-import { getPackedSettings } from "http2";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import getPremiumTransaction from "@/libs/getPremiumTransaction";
-import { useState } from "react";
-import Link from "next/link";
 import { useRef } from "react"
 import updatePremiumStatus from "@/libs/updatePremiumStatus"
+import updateUser from "@/libs/updateUser"
 
-
-
-export default function ViewPremium({user, premiumTransaction}: {user: UserSession, premiumTransaction: PremiumTransaction|null}){
+export default function ViewPremium({premiumTransaction}: {premiumTransaction: PremiumTransaction}){
 
     const {data: session} = useSession();
     const router = useRouter();
@@ -27,7 +22,7 @@ export default function ViewPremium({user, premiumTransaction}: {user: UserSessi
         if (session) {
             if (refuseScreen.current) refuseScreen.current.classList.toggle('hidden')
             if (waitingRefuse.current) waitingRefuse.current.classList.toggle('hidden')
-            updatePremiumStatus({id: premiumTransaction?._id, status: 'failed'}, session.user.token)
+            updatePremiumStatus({id: premiumTransaction._id, status: 'failed'}, session.user.token)
             .then(() => {
                 router.push('/mypremium')
                 router.refresh()
@@ -39,15 +34,30 @@ export default function ViewPremium({user, premiumTransaction}: {user: UserSessi
         if (session) {
             if (confirmScreen.current) confirmScreen.current.classList.toggle('hidden')
             if (waitingConfirm.current) waitingConfirm.current.classList.toggle('hidden')
-            updatePremiumStatus({id: premiumTransaction?._id, status: 'success'}, session.user.token)
+
+            const days = premiumTransaction.membership === 'Individual(year)'? 365 : 30
+
+            let date
+            if (premiumTransaction.user.expire) {
+                date = new Date(premiumTransaction.user.expire)
+            } else {
+                date = new Date()
+            }
+
+            date.setDate(date.getDate() + days)
+            date.setHours(24, 0, 0, 0)
+
+            updateUser({id: premiumTransaction.user._id, role: 'premium', expire: date.toISOString()}, session.user.token)
             .then(() => {
-                router.push('/mypremium')
-                router.refresh()
+                updatePremiumStatus({id: premiumTransaction._id, status: 'success'}, session.user.token)
+                .then(() => {
+                    router.push('/mypremium')
+                    router.refresh()
+                })
             })
         }
     }
     
-
     return(
         <div className="text-center m-10">
             {
@@ -58,33 +68,29 @@ export default function ViewPremium({user, premiumTransaction}: {user: UserSessi
             <div className="flex flex-col items-center">
                 <div className="block bg-white border border-3 border-[#DFB36F] shadow-xl mx-5 my-10 w-[50vw] pb-8 rounded-lg">
                     <div className="block bg-white border border-2 border-[#000000] shadow-xl w-80% h-50% rounded-lg mx-8 mt-8 text-left">
-                        <div className="text-lg font-bold ml-5 mt-3">User ID: {premiumTransaction?.user}</div>
-                        <div className="text-base ml-5">Membership Type: {premiumTransaction?.membership}</div>
-                        <div className="text-base ml-5 mb-2">Cost: {premiumTransaction?.cost}</div>
+                        <div className="text-lg font-bold ml-5 mt-3">User ID: {premiumTransaction.user._id}</div>
+                        <div className="text-base ml-5">Membership Type: {premiumTransaction.membership}</div>
+                        <div className="text-base ml-5 mb-2">Cost: {premiumTransaction.cost}</div>
                     </div>
-                <div className="space-y-2"></div>
-                    <div className="text-xl font-bold text-left ml-8 mt-5">Bank: {premiumTransaction?.bank}</div>
-                    <div className="text-xl font-bold text-left ml-8">Transaction slip:</div>
-                    <div className="font-medium flex justify-center">
-                        {premiumTransaction? <img src={premiumTransaction.slip} className="h-[20vw]"/> : 'No transaction slip yet'}
+                    <div className="space-y-2">
+                        <div className="text-xl font-bold text-left ml-8 mt-5">Bank: {premiumTransaction?.bank}</div>
+                        <div className="text-xl font-bold text-left ml-8">Transaction slip:</div>
+                        <div className="font-medium flex justify-center">
+                            {premiumTransaction? <img src={premiumTransaction.slip} className="h-[20vw]"/> : 'No transaction slip yet'}
+                        </div>
+                        {
+                            premiumTransaction?.membership === 'Student'?
+                            <div>
+                                <div className="text-xl font-bold text-left ml-8">Student Card:</div>
+                                <div className="font-medium flex justify-center">
+                                    {premiumTransaction? <img src={premiumTransaction.studentcard} className="h-[20vw]"/> : 'No student card yet'}
+                                </div>
+                            </div>:null
+                        }
                     </div>
-                    {
-                        premiumTransaction?.membership === 'Student'?
-                        <div>
-                            <div className="text-xl font-bold text-left ml-8">Student Card:</div>
-                            <div className="font-medium flex justify-center">
-                                {premiumTransaction? <img src={premiumTransaction.studentcard} className="h-[20vw]"/> : 'No student card yet'}
-                            </div>
-                        </div>:null
-                    }
                 </div>
             </div>
             <div className="flex flex-row space-x-12 justify-center">
-                {/* {
-                    session?.user._id === premiumTransaction?.user && !premiumTransaction?
-                    <Link className="text-lg text-white bg-cyan-450 py-2 px-4 rounded-lg hover:bg-cyan-700" href={`/premium/registration/${}`}>Add Transaction Slip</Link>
-                    : null
-                } */}
                 {
                     session?.user.role === 'admin'?
                     <div className="space-x-12">

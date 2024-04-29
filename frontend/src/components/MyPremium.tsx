@@ -80,29 +80,35 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
                                     {
                                         item.status === 'pending' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Pending Approval</div> 
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-[#E39D48] mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Pending Approval</div>
+                                            </div>
                                             <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                     {
                                         item.status === 'success' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-teal-500 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Success</div>
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-teal-500 mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Success</div>
+                                            </div>
                                             <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                     {
                                         item.status === 'failed' ? 
                                         <div className="flex flex-row">
-                                            <div className="w-3 h-3 rounded-full bg-red-400 mr-1 mt-1"></div>
-                                            <div className="text-md text-gray-500 font-bold">Failed</div>
+                                            <div className="flex flex-row items-center">
+                                                <div className="w-3 h-3 rounded-full bg-red-400 mr-1"></div>
+                                                <div className="text-md text-gray-500 font-bold">Failed</div>
+                                            </div>
                                             <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeButton(item)}/>
                                         </div>: null
                                     }
                                 </div>
-                                <div className="text-xl text-black font-bold pb-2 py-2">User ID: {item.user}</div>
+                                <div className="text-xl text-black font-bold pb-2 py-2">User ID: {item.user._id}</div>
                                 <div className="text-sm text-gray-700">Membership Type: {item.membership}</div>
                                 <div className="text-sm text-gray-700">Cost: {item.cost} Baht</div>
                                 <div className="my-2 flex flex-col justify-between text-center sm:flex-row">
@@ -131,10 +137,17 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={waitingRemove}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4 text-center">
-                    <div className="text-2xl font-bold mb-4">Removing the request...</div>
+                    <div className="text-2xl font-bold mb-4">Removing the reservation...</div>
                     <div>Please wait a moment</div>
                 </div>
             </div>
         </div>
     )
 }
+
+
+
+
+
+
+
