@@ -1,5 +1,5 @@
 export default async function userRegister(user: User) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/auth/register`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"

@@ -1,5 +1,5 @@
 export default async function deleteCurrentUser(id: string, token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/users`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {
         method: 'DELETE',
         headers: {
             "authorization": `Bearer ${token}`

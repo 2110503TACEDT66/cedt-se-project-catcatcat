@@ -6,7 +6,7 @@ import { useRef } from "react"
 import updatePremiumStatus from "@/libs/updatePremiumStatus"
 import updateUser from "@/libs/updateUser"
 
-export default function ViewPremium({premiumTransaction}: {premiumTransaction: PremiumTransaction}){
+export default function ViewPremium({premiumTransaction}: {premiumTransaction: getPremiumTransaction}){
 
     const {data: session} = useSession();
     const router = useRouter();

@@ -77,10 +77,21 @@ interface UserSession {
 
 interface PremiumTransactions {
     count: number,
-    data: PremiumTransaction[]
+    data: getPremiumTransactions[]
 }
 
-interface PremiumTransaction {
+interface getPremiumTransactions {
+    _id: string,
+    user: string,
+    membership: string,
+    cost: string,
+    bank: string,
+    studentcard:string,
+    status: string,
+    slip: string
+}
+
+interface getPremiumTransaction {
     _id: string,
     user: {
         _id: string,

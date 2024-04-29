@@ -1,5 +1,5 @@
 export default async function addReservation(reservationItem: ReservationItem, token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/coworkingspaces/${reservationItem.cwsID}/reservations`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/coworkingspaces/${reservationItem.cwsID}/reservations`, {
         method: 'POST',
         headers: {
             "authorization": `Bearer ${token}`,

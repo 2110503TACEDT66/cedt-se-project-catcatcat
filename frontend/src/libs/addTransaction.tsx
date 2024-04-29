@@ -1,5 +1,5 @@
 export default async function addTransaction(transaction: TransactionItem, token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/transactions/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transactions/`, {
         method: 'POST',
         headers: {
             "authorization": `Bearer ${token}`,

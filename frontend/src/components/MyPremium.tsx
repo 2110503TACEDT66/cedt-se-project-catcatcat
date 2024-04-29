@@ -11,9 +11,9 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
     const router = useRouter()
     router.refresh()
 
-    let sortedPremium: PremiumTransaction[] = [];
+    let sortedPremium: getPremiumTransactions[] = [];
     if (premiumTransactions && premiumTransactions.data) {
-        sortedPremium = [...premiumTransactions.data].sort((a: PremiumTransaction, b: PremiumTransaction) => {
+        sortedPremium = [...premiumTransactions.data].sort((a: getPremiumTransactions, b: getPremiumTransactions) => {
             if (a.status === 'pending') return -1;
             if (a.status === 'failed' && b.status !== 'pending') return -1;
             if (a.status === 'success' && b.status !== 'pending' && b.status !== 'failed') return -1;
@@ -26,9 +26,9 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
     const removeConfirm = useRef<HTMLDivElement>(null)
     const waitingRemove = useRef<HTMLDivElement>(null)
 
-    const [item, setItem] = useState<PremiumTransaction | null>(null)
+    const [item, setItem] = useState<getPremiumTransactions | null>(null)
 
-    const removeButton = (item: PremiumTransaction) => {
+    const removeButton = (item: getPremiumTransactions) => {
         if (removeConfirm.current) removeConfirm.current.classList.toggle('hidden')
         setItem(item)
     }
@@ -70,11 +70,11 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
 
                     sortedPremium.length !== 0 ?
                     sortedPremium
-                        .filter((item: PremiumTransaction) => {
+                        .filter((item: getPremiumTransactions) => {
                             if (selectedStatus === 'all') return true;
                             return item.status === selectedStatus;
                         })
-                        .map((item: PremiumTransaction) => (
+                        .map((item: getPremiumTransactions) => (
                             <div className="bg-white border rounded border-sky-900 shadow-lg px-5 mx-[15%] py-2 my-5 w-[70%]" key={item._id}>
                                 <div className="float-right my-2 flex flex-col justify-between text-center sm:flex-row">
                                     {
@@ -108,7 +108,7 @@ export default function MyPremium({ premiumTransactions, user }: { premiumTransa
                                         </div>: null
                                     }
                                 </div>
-                                <div className="text-xl text-black font-bold pb-2 py-2">User ID: {item.user._id}</div>
+                                <div className="text-xl text-black font-bold pb-2 py-2">User ID: {item.user}</div>
                                 <div className="text-sm text-gray-700">Membership Type: {item.membership}</div>
                                 <div className="text-sm text-gray-700">Cost: {item.cost} Baht</div>
                                 <div className="my-2 flex flex-col justify-between text-center sm:flex-row">

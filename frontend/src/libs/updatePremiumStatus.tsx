@@ -1,5 +1,5 @@
 export default async function updatePremiumStatus(premiumTransaction: any, token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/premiumtransactions/${premiumTransaction.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/premiumtransactions/${premiumTransaction.id}`, {
         method: 'PUT',
         headers: {
             "authorization": `Bearer ${token}`,

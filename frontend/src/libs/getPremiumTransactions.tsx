@@ -1,5 +1,5 @@
 export default async function getPremiumTransactions(token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/premiumtransactions`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/premiumtransactions`, {
         method: 'GET',
         headers: {
             authorization: `Bearer ${token}`

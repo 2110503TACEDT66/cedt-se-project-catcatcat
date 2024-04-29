@@ -1,5 +1,5 @@
 export default async function updateUser(user: any, token: string) {
-    const response = await fetch(`https://coworking-backend-beta.vercel.app/api/users/${user.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${user.id}`, {
         method: 'PUT',
         headers: {
             "authorization": `Bearer ${token}`,
