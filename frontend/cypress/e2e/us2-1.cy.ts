@@ -8,7 +8,7 @@ describe('Premium page test', () => {
 
   it('Mypremium button should navigate to premium page', () => {
     cy.contains('More Description').click()
-    cy.contains("CATCATCAT Premium").should('exist')
+    cy.url().should('include', '/premium');
   })
 
   it('Premium page should show premium cost, premium special privileges, and link navigates to premium registration page', () => {
@@ -39,7 +39,7 @@ describe('Popup test', () => {
 
   it('renew button should take you to the premium page', () => {
     cy.contains('Renew').click()
-    cy.contains("CATCATCAT Premium").should('exist')
+    cy.url().should('include', '/premium');
   })
 
   it('nevermid button should close the popup', () => {
