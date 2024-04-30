@@ -96,7 +96,7 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
                                 Start time
                             </div>
                         </th>
-                        <th>
+                        <th id="startTime">
                             <LocationDateReserve onDateChange={(value: Dayjs) => { setStartTime(value.add(7, 'hour')) }} />
                         </th>
                     </tr>
@@ -106,7 +106,7 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
                                 End time
                             </div>
                         </th>
-                        <th>
+                        <th id="endTime">
                             <LocationDateReserve onDateChange={(value: Dayjs) => { setEndTime(value.add(7, 'hour')) }} />
                         </th>
                     </tr>
@@ -134,7 +134,7 @@ export default function CwsSelector({cws} : {cws: Coworkingspaces}) {
             </button>
 
             {
-                reserveStatus? <div className="text-center"> {reserveStatus} </div> : null
+                reserveStatus? <div id="reserveStatus" className="text-center"> {reserveStatus} </div> : null
             }
         </div>
     )

@@ -40,12 +40,13 @@ export default function ViewPremium({premiumTransaction}: {premiumTransaction: g
             let date
             if (premiumTransaction.user.expire) {
                 date = new Date(premiumTransaction.user.expire)
+                date.setDate(date.getDate() + days)
+                date.setHours(0, 0, 0, 0)
             } else {
                 date = new Date()
+                date.setDate(date.getDate() + days)
+                date.setHours(24, 0, 0, 0)
             }
-
-            date.setDate(date.getDate() + days)
-            date.setHours(24, 0, 0, 0)
 
             updateUser({id: premiumTransaction.user._id, role: 'premium', expire: date.toISOString()}, session.user.token)
             .then(() => {
@@ -110,7 +111,7 @@ export default function ViewPremium({premiumTransaction}: {premiumTransaction: g
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={refuseScreen}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4">
-                    <div className="text-2xl font-bold mb-4">Are you sure to refuse this reservation?</div>
+                    <div className="text-2xl font-bold mb-4">Are you sure to refuse this premium payment?</div>
                     <div className='space-x-4 flex justify-end'>
                         <button className="mt-4 px-4 py-2 text-black rounded-lg border-2 border-black" onClick={(e) => {if (refuseScreen.current) refuseScreen.current.classList.toggle('hidden')}}>
                         Close
@@ -123,7 +124,7 @@ export default function ViewPremium({premiumTransaction}: {premiumTransaction: g
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={confirmScreen}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4">
-                    <div className="text-2xl font-bold mb-4">Are you sure to confirm this reservation?</div>
+                    <div className="text-2xl font-bold mb-4">Are you sure to confirm this premium payment?</div>
                     <div className='space-x-4 flex justify-end'>
                         <button className="mt-4 px-4 py-2 text-black rounded-lg border-2 border-black" onClick={(e) => {if (confirmScreen.current) confirmScreen.current.classList.toggle('hidden')}}>
                         Close
@@ -136,13 +137,13 @@ export default function ViewPremium({premiumTransaction}: {premiumTransaction: g
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={waitingRefuse}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4">
-                    <div className="text-2xl font-bold mb-4">Refusing the reservation...</div>
+                    <div className="text-2xl font-bold mb-4">Refusing the premium payment...</div>
                     <div>Please wait a moment</div>
                 </div>
             </div>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" ref={waitingConfirm}>
                 <div className="bg-white p-8 rounded-lg shadow-md mx-4">
-                    <div className="text-2xl font-bold mb-4">Confirming the reservation...</div>
+                    <div className="text-2xl font-bold mb-4">Confirming the premium payment...</div>
                     <div>Please wait a moment</div>
                 </div>
             </div>

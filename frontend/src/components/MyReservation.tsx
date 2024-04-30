@@ -82,7 +82,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image id="deleteIcon" className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
@@ -95,7 +95,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image id="deleteIcon" className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
@@ -108,7 +108,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image id="deleteIcon" className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                     {
@@ -121,7 +121,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
                                             <Link href={`/update?id=${item._id}&startTime=${item.reserveStartTime}&endTime=${item.reserveEndTime}`}>
                                                 <Image className="ml-3" alt='img' src="/img/editicon.png" width={30} height={30}/>
                                             </Link>
-                                            <Image className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
+                                            <Image id="deleteIcon" className="ml-2 cursor-pointer" alt='img' src="/img/deleteicon.png" width={30} height={10} onClick={() => removeReservationButton(item)}/>
                                         </div>: null
                                     }
                                 </div>
