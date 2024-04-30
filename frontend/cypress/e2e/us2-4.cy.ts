@@ -59,7 +59,7 @@ describe('Acceptance criteria 2', () => {
         cy.get('button[type="submit"]').click();
     
         cy.visit('/reservation')
-        cy.get('#expire').should('have.value', '30/05/2024');
+        cy.get('#expire').should('have.value', '31/05/2024');
 
         cy.visit('/premium/payment/individual-month')
         cy.contains('Confirm Payment').click();

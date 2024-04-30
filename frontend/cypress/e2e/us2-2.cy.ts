@@ -53,11 +53,3 @@ describe('Acceptance criteria 2', () => {
     cy.get('div[id="reserveStatus"]').should('not.contain.text', 'Waiting for payment')
   })
 })
-
-after('delete all reservations', () => {
-  cy.visit('/myreservation', {failOnStatusCode: false}).then(() => { cy.wait(500) })
-  for (let i = 0; i < 5; i++) {    
-    cy.get('img[id="deleteIcon"]').first().click()
-    cy.get('button:contains("Remove")').click().then(() => { cy.wait(4000) })
-  }
-})

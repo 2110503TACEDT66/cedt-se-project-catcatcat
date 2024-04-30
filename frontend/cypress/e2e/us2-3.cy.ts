@@ -17,15 +17,12 @@ describe('Acceptance criteria 1', () => {
     // Select End time
     cy.get('tr:contains("End time")').find('input').type('05/05/2024 01:05 PM');
 
-    cy.contains('#Cost', '180 Baht (from 200)')
-    .should('be.visible')
+    cy.contains('#Cost', '180 Baht (from 200)').should('be.visible')
   })
 });
 
 describe('Acceptance criteria 2', () => {
   it('reserve success', () => {
-    cy.visit('http://localhost:3000/')
-
     cy.visit('/api/auth/signin')
 
     cy.get('#input-email-for-credentials-provider').type('PremiumCypress@gmail.com');
@@ -35,7 +32,7 @@ describe('Acceptance criteria 2', () => {
     cy.visit('/reservation')
     //select coop
     cy.get('#coop').click();
-    cy.wait(500)
+    cy.wait(800)
     cy.get('.MuiMenu-list').children().first().click();
 
     //  select time
@@ -45,16 +42,16 @@ describe('Acceptance criteria 2', () => {
     
     // Click Reserve button
     cy.get('button').contains('Reserve').click();
-    cy.wait(2000)
     //click confirm payment 
     cy.contains('Confirm Payment').click();
+    cy.wait(1000);
     cy.get('select').select('Kbank');
     cy.get("[type='file']").selectFile('cypress/images/us2-3slippremium.jpg', {force: true});
-    cy.wait(7000);
+    cy.wait(2000);
     cy.contains('Confirm Payment').click().then(()=> {
       cy.wait(7000);
     })
-    cy.visit('http://localhost:3000/myreservation', { failOnStatusCode: false });
+    cy.visit('/myreservation', { failOnStatusCode: false });
     cy.wait(1000);
     cy.contains('Pending Approval');
 
@@ -75,7 +72,7 @@ describe('Acceptance criteria 2', () => {
     
   
     //ไปที่ /myreservation
-    cy.visit('http://localhost:3000/myreservation', { failOnStatusCode: false });
+    cy.visit('/myreservation', { failOnStatusCode: false });
     cy.get('button:contains("View")').first().click().then(()=> {
       cy.wait(3000)
     })
@@ -99,7 +96,7 @@ describe('Acceptance criteria 2', () => {
     cy.get('#input-email-for-credentials-provider').type('PremiumCypress@gmail.com');
     cy.get('#input-password-for-credentials-provider').type('123456');
     cy.get('button[type="submit"]').click();
-    cy.visit('http://localhost:3000/myreservation', { failOnStatusCode: false });
+    cy.visit('/myreservation', { failOnStatusCode: false });
     cy.contains('Success');
   });
 });
