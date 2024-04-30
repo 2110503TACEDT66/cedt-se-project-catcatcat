@@ -45,6 +45,7 @@ describe('Acceptance criteria 2', () => {
     
     // Click Reserve button
     cy.get('button').contains('Reserve').click();
+    cy.wait(2000)
     //click confirm payment 
     cy.contains('Confirm Payment').click();
     cy.get('select').select('Kbank');
